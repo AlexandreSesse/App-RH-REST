@@ -1,7 +1,6 @@
 package br.com.sesse.AppRh.controllers;
 
 import br.com.sesse.AppRh.dtos.VagaDto;
-import br.com.sesse.AppRh.models.Vaga;
 import br.com.sesse.AppRh.services.VagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class VagaController {
     }
 
     @PostMapping
-    public Vaga criarVaga(@RequestBody @Valid VagaDto vagaDto) {  // Alterado para receber VagaDto
+    public VagaDto criarVaga(@RequestBody @Valid VagaDto vagaDto) {
         return vagaService.salvar(vagaDto);
     }
 

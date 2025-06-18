@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_vagas")
@@ -19,9 +22,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vaga {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Usar identidade se o banco suportar
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long codigo;
 
     @NotEmpty
@@ -37,7 +39,9 @@ public class Vaga {
     private BigDecimal salario;
 
     @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<Candidato> candidatos;
+
 
     public Vaga(VagaDto vaga) {
         this.codigo = vaga.codigo();
@@ -45,5 +49,14 @@ public class Vaga {
         this.descricao = vaga.descricao();
         this.data = vaga.data();
         this.salario = vaga.salario();
+
+        this.candidatos = (vaga.candidatos() != null) ?
+                vaga.candidatos().stream()
+                        .map(candidatoDto -> new Candidato(candidatoDto))
+                        .collect(Collectors.toList()) : new ArrayList<>();
+    }
+
+    public void adicionarCandidatos(List<Candidato> candidatos) {
+        this.candidatos = candidatos;
     }
 }

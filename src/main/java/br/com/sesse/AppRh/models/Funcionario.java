@@ -24,8 +24,8 @@ public class Funcionario implements Serializable {
     private String nome;
 
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")  // Formato de data ISO-8601
-    private LocalDate data;  // Alterado para LocalDate
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate data; 
 
     @NotEmpty
     private String email;

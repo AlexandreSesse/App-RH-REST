@@ -1,5 +1,7 @@
 package br.com.sesse.AppRh.dtos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.sesse.AppRh.models.Candidato;
 import br.com.sesse.AppRh.models.Vaga;
 
@@ -8,6 +10,7 @@ public record CandidatoDto(
         String rg,
         String nomeCandidato,
         String email,
+        @JsonManagedReference
         VagaDto vaga) {
 
     public CandidatoDto(Candidato candidato){

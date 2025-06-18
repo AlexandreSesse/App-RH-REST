@@ -27,13 +27,14 @@ public class VagaService {
 
     public VagaDto buscarPorId(Long id) {
         Vaga vaga = vagaRepository.findById(id)
-                .orElseThrow(() -> new VagaNotFoundException("Vaga não encontrada"));  // Exceção customizada
+                .orElseThrow(() -> new VagaNotFoundException("Vaga não encontrada"));
         return new VagaDto(vaga);
     }
 
-    public Vaga salvar(VagaDto vagaDto) {  // Alterado para receber VagaDto
-        Vaga vaga = new Vaga(vagaDto);  // Converte para Vaga
-        return vagaRepository.save(vaga);
+    public VagaDto salvar(VagaDto vagaDto) {
+        Vaga vaga = new Vaga(vagaDto);
+        vaga = vagaRepository.save(vaga);
+        return new VagaDto(vaga);
     }
 
     public void deletar(Long id) {
